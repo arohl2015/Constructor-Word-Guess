@@ -4,7 +4,7 @@
 
 // A string value to store the underlying character for the letter
 function Letter(character) {
-    this.Letter = character;
+    this.letter = character;
     // A boolean value that stores whether that letter has been guessed yet
     this.guessed = false;
     // A function that returns the underlying character if the letter has 
@@ -12,6 +12,7 @@ function Letter(character) {
     this.toString = function () {
         if (this.letter === " ") {
             this.guessed = true;
+            console.log(this.guessed);
             return " ";
         }
         else {
@@ -20,6 +21,7 @@ function Letter(character) {
             }
             else {
                 return this.letter;
+                console.log(this.letter);
             }
         }
     };
@@ -34,6 +36,4 @@ function Letter(character) {
 
 // Exporting our letter constructor. We will require it in word.js
 module.exports = Letter;
-
-
 
