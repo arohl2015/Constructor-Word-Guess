@@ -7,18 +7,18 @@ var inquirer = require("inquirer");
 
 // Randomly selects a word and uses the Word constructor to store it - creating variable for theme
 var harryPotter = ["dumbledore", "hermione", "voldemort", "weasley",
-                   "revelio", "expelliarmus", "lumos", "alohomora",
-                   "muggle", "animagus", "hogwarts", "butterbeer"] 
+    "revelio", "expelliarmus", "lumos", "alohomora",
+    "muggle", "animagus", "hogwarts", "butterbeer"]
 
 // Prompts the user for each guess and keeps track of the user's remaining guesses
 var guesses;
-var selectedPotter; 
-var term;
+var selectedPotter;
+var words;
 var selectedTerm;
 
 // Function to run the game itself.
 function start() {
-    selectedPotter [];
+    selectedPotter = [];
     console.log("Welcome to the Harry Potter Guessing Game!");
     console.log("\n--------------\n");
     startGame();
@@ -26,17 +26,17 @@ function start() {
 
 function startGame() {
     selectedTerm = "";
-    guesses = 15;
+    guesses = 10;
     if (selectedPotter.length < harryPotter.length) {
         selectedTerm = getTerm();
     } else {
         //message for when the user guesses right
         console.log("You know your Harry Potter terms!");
-        continueGame();
+        continuePrompt();
     }
     if (selectedTerm) {
-        term = new Term (selectedTerm);
-        term.makeLetters();
+        words = new Word(selectedTerm);
+        words.makeLetters();
         userGuess();
     }
 }
@@ -52,25 +52,54 @@ function getTerm() {
     }
 }
 
-function userGuess () {
+function userGuess() {
     var check = [];
+    inquirer.prompt([
+        {
+            name: "letterGuessed",
+            message: words.display() +
+                "\nGuess a letter!" +
+                "\nGuesses Left: " + guesses
+        }
+    ])
+        .then(data => {
+            words.lettersArray.forEach(letter => {
+                letter.checkLetter(data.letterGuessed);
+                check.push(letter.getCharacter());
+            });
+            // In Javascript, the exclamation mark (“!”) symbol, called a “bang,” is the logical “not” operator. Placed in front of a boolean value it will reverse the value, returning the opposite.
+            if (guesses > 0 && check.indexOf("_") !== -1) {
+        guesses--;
+            if (guesses === 0) {
+        console.log("Bet you wish you could obliviate those guesses. GAME OVER!");
+        continuePrompt();
+    } else {
+        userGuess();
+    }
+        }  else {
+    console.log("Lumos! You must be a Harry Potter fan!");
+    console.log(words.display());
+    startGame();
+}
+});
+}
+
+function continuePrompt() {
     inquirer.prompt ([
         {
-         name: "letterGuessed",
-         message: term.update() +
-         "\nGuess a letter!" +
-         "\nGuesses Left: " + guesses
-}
-])
-.then(data => {
-    term.lettersArray.forEach(letter => {
-        letter.checkLetter(data.letterGuessed);
-        check.push(letter.getCharacter());
+         name: "continue",
+         type: "list",
+         message: "Imperio! Would you like to try again?",
+         choices: ["Yes", "No"]
+        }
+    ])
+    .then(data => {
+        if (data.continue === "Yes") {
+            start();
+        } else {
+            console.log("Thanks for playing! Put your wand away until next time.");
+        }
     });
-    if (guesses > 0 && check.indexOf("_")) {
-        
-    } else {
-        
-    }
-}   
-        
+}
+
+start();
