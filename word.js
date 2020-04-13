@@ -27,7 +27,7 @@ function Word(words) {
     this.display = function () {
         let displayWord = "";
         this.lettersArray.forEach(letter => {
-            displayWord += letter.guess() + " ";
+            displayWord += letter.getCharacter() + " ";
         });
         return displayWord;
     }
