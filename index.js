@@ -2,6 +2,8 @@
 var Word = require("./word.js");
 // Dependency for inquirer npm package
 var inquirer = require("inquirer");
+// Dependency to add color
+var clc = require("cli-color");
 // Dependency for prompt npm package
 // var prompt = require("prompt"); removed --- only need one of the packages not both
 
@@ -19,18 +21,20 @@ var selectedTerm;
 // Function to run the game itself.
 function start() {
     selectedPotter = [];
-    console.log("Welcome to the Harry Potter Guessing Game!");
+    console.log(clc.red.underline("Welcome to the Harry Potter Guessing Game!"));
     console.log("\n--------------\n");
     startGame();
 }
 
+// Create the function to start the game and set the number of guesses
+// If/Else statement if user wins and creates next word
 function startGame() {
     selectedTerm = "";
     guesses = 10;
     if (selectedPotter.length < harryPotter.length) {
         selectedTerm = getTerm();
     } else {
-        //message for when the user guesses right
+//message for when the user guesses right/wins
         console.log("You know your Harry Potter terms!");
         continuePrompt();
     }
@@ -40,7 +44,7 @@ function startGame() {
         userGuess();
     }
 }
-
+// creates the ability to caculate the length of the words
 function getTerm() {
     var random = Math.floor(Math.random() * harryPotter.length);
     var randomTerm = harryPotter[random];
@@ -51,7 +55,7 @@ function getTerm() {
         return getTerm();
     }
 }
-
+// 
 function userGuess() {
     var check = [];
     inquirer.prompt([
@@ -67,7 +71,7 @@ function userGuess() {
                 letter.checkLetter(data.letterGuessed);
                 check.push(letter.getCharacter());
             });
-            // In Javascript, the exclamation mark (“!”) symbol, called a “bang,” is the logical “not” operator. Placed in front of a boolean value it will reverse the value, returning the opposite.
+// In Javascript, the exclamation mark (“!”) symbol, called a “bang,” is the logical “not” operator. Placed in front of a boolean value it will reverse the value, returning the opposite.
             if (guesses > 0 && check.indexOf("_") !== -1) {
         guesses--;
             if (guesses === 0) {
