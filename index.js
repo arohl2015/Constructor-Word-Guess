@@ -2,14 +2,14 @@
 var Word = require("./word.js");
 // Dependency for inquirer npm package
 var inquirer = require("inquirer");
-// Dependency to add color
-var clc = require("cli-color");
+// Dependency for cli-color to change font colors in terminal
+var cli = require("cli-color");
 // Dependency for prompt npm package
 // var prompt = require("prompt"); removed --- only need one of the packages not both
 
 // Randomly selects a word and uses the Word constructor to store it - creating variable for theme
 var harryPotter = ["dumbledore", "hermione", "voldemort", "weasley",
-    "revelio", "expelliarmus", "lumos", "alohomora",
+    "revelio", "expelliarmus", "nox", "alohomora",
     "muggle", "animagus", "hogwarts", "butterbeer"]
 
 // Prompts the user for each guess and keeps track of the user's remaining guesses
@@ -21,8 +21,8 @@ var selectedTerm;
 // Function to run the game itself.
 function start() {
     selectedPotter = [];
-    console.log(clc.red.underline("Welcome to the Harry Potter Guessing Game!"));
-    console.log("\n--------------\n");
+    console.log(cli.blue.underline("Welcome to the Harry Potter Guessing Game!"));
+    console.log("\n-------------------------------\n");
     startGame();
 }
 
@@ -35,7 +35,7 @@ function startGame() {
         selectedTerm = getTerm();
     } else {
 //message for when the user guesses right/wins
-        console.log("You know your Harry Potter terms!");
+        console.log(cli.green("You know your Harry Potter!"));
         continuePrompt();
     }
     if (selectedTerm) {
@@ -62,8 +62,8 @@ function userGuess() {
         {
             name: "letterGuessed",
             message: words.display() +
-                "\nGuess a letter!" +
-                "\nGuesses Left: " + guesses
+                cli.yellow("\nGuess a letter!") +
+                cli.yellow("\nGuesses Left: ") + guesses
         }
     ])
         .then(data => {
@@ -75,13 +75,13 @@ function userGuess() {
             if (guesses > 0 && check.indexOf("_") !== -1) {
         guesses--;
             if (guesses === 0) {
-        console.log("Bet you wish you could obliviate those guesses. GAME OVER!");
+        console.log(cli.red("Bet you wish you could obliviate those guesses. GAME OVER!"));
         continuePrompt();
     } else {
         userGuess();
     }
         }  else {
-    console.log("Lumos! You must be a Harry Potter fan!");
+    console.log(cli.green("You are a true Potterhead!"));
     console.log(words.display());
     startGame();
 }
@@ -93,7 +93,7 @@ function continuePrompt() {
         {
          name: "continue",
          type: "list",
-         message: "Imperio! Would you like to try again?",
+         message: "Would you like to continue on your magical journey?",
          choices: ["Yes", "No"]
         }
     ])
@@ -101,7 +101,7 @@ function continuePrompt() {
         if (data.continue === "Yes") {
             start();
         } else {
-            console.log("Thanks for playing! Put your wand away until next time.");
+            console.log(cli.magentaBright("Thanks for playing! Put your wand away until next time."));
         }
     });
 }
