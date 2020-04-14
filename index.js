@@ -8,9 +8,9 @@ var cli = require("cli-color");
 // var prompt = require("prompt"); removed --- only need one of the packages not both
 
 // Randomly selects a word and uses the Word constructor to store it - creating variable for theme
-var harryPotter = ["dumbledore", "hermione", "voldemort", "weasley",
-    "revelio", "expelliarmus", "nox", "alohomora",
-    "muggle", "animagus", "hogwarts", "butterbeer"]
+var harryPotter = ["dumbledore", "hermione", "voldemort", "weasley", "percy",
+    "revelio", "expelliarmus", "nox", "alohomora", "leviosa",
+    "muggle", "animagus", "hogwarts", "butterbeer", "auror"]
 
 // Prompts the user for each guess and keeps track of the user's remaining guesses
 var guesses;
