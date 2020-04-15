@@ -36,7 +36,7 @@ Word Guess is a Node.js command-line game using JavaScript constructors. In my v
 
 ![Default](/images/endgame.PNG)
 
-* If the user guesses the word correctly, the following message will display and automatically display the next word to guess:
+* If the user guesses the word correctly, the following message will display and automatically show the next word to guess:
 
 ![Default](/images/correctguess.PNG)
 
